@@ -1,0 +1,1 @@
+workouts - GET, POST, PUT - egy felhasználó saját egyéni edzésterve

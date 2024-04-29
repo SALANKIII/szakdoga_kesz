@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>teszt</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="bootstrap.bundle.min.js"></script>
+</head>
+
+<body onload="getUserEmail()">
+    <input type="text" id="userID" class="d-none">
+    <div class="container mt-5">
+        <!-- menu  -->
+        <nav class="navbar navbar-expand-sm bg-white rounded">
+            <div class="container-fluid">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" id="profile">
+                            <i class="fa-regular fa-user btn btn-outline-success"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" id="measure">
+                            <i class="fa-solid fa-weight-scale btn btn-outline-success"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" id="downloadApp">
+                            <i class="fa-solid fa-file-arrow-down btn btn-outline-success"></i>
+                        </a>
+                    </li>
+                </ul>
+                <button id="logout" onclick="logout()" class="btn btn-outline-success float-end"><i
+                        class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </nav>
+        <div class="table-responsive mt-5" onload="getMeasure()">
+            <table class="table table-dark table-hover table striped text-center align-middle border border-success">
+                <thead>
+                    <tr >
+                        <th>Weight</th>
+                        <th>Body Fat Percentage</th>
+                        <th>Caloric Intake</th>
+                        <th>Shoulders</th>
+                        <th>Chest</th>
+                        <th>Neck</th>
+                        <th>Left Bicep</th>
+                        <th>Right Bicep</th>
+                        <th>Left Fore Arm</th>
+                        <th>Right Fore Arm</th>
+                        <th>Upper Abs</th>
+                        <th>Waist</th>
+                        <th>Lower Abs</th>
+                        <th>Hips</th>
+                        <th>Left Thigh</th>
+                        <th>Right Thigh</th>
+                        <th>Left Calf</th>
+                        <th>Right Calf</th>
+                        <th>Measure Date</th>
+                    </tr>
+                </thead>
+                <tbody id="users">
+                    
+                </tbody>
+            </table>
+        </div>
+
+
+
+    </div>
+
+    <!-- profil kép szerkesztésének offcanvas (oldalról beugró) menüje -->
+    <div class="offcanvas offcanvas-start bg-dark text-white rounded" id="editProfile" style="max-width: 380px;">
+        <div class="offcanvas-header mx-auto">
+            <h1 class="offcanvas-title">Profile</h1>
+        </div>
+        <div class="offcanvas-body row mx-auto" id="offcanvasBody">
+
+        </div>
+    </div>
+
+    <!-- új mérés hozzáadása -->
+    <div class="modal fade" id="newMeasure" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">New measure</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editMeasure">
+                        <div for="Core" class="fs-4 fw-semibold mb-2 text-center">Core</div>
+                        <div class="form-group">
+                            
+                            <label for="newWeight">Weight</label>
+                            <input type="number" class="form-control" id="newWeight" name="newWeight">
+                        </div>
+                        <div class="form-group">
+                            <label for="newBodyFatPercentage">Body fat percentage</label>
+                            <input type="number" class="form-control" id="newBodyFatPercentage" name="newBodyFatPercentage">
+                        </div>
+                        <div class="form-group">
+                            <label for="newCaloricIntake">Caloric intake</label>
+                            <input type="number" class="form-control" id="newCaloricIntake" name="newCaloricIntake">
+                        </div>
+                        <div for="Core" class="fs-4 fw-semibold mb-2 mt-3 text-center">Body Parts</div>
+                        <p></p>
+                        <div class="form-group">
+                            <label for="newNeck">Neck</label>
+                            <input type="number" class="form-control" id="newNeck" name="newNeck">
+                        </div>
+                        <div class="form-group">
+                            <label for="newShoulders">Shoulders</label>
+                            <input type="number" class="form-control" id="newShoulders" name="newShoulders">
+                        </div>
+                        <div class="form-group">
+                            <label for="newChest">Chest</label>
+                            <input type="number" class="form-control" id="newChest" name="newChest">
+                        </div>
+                        <div class="form-group">
+                            <label for="newLeftBicep">Left bicep</label>
+                            <input type="number" class="form-control" id="newLeftBicep" name="newLeftBicep">
+                        </div>
+                        <div class="form-group">
+                            <label for="newRightBicep">Right bicep</label>
+                            <input type="number" class="form-control" id="newRightBicep" name="newRightBicep">
+                        </div>
+                        <div class="form-group">
+                            <label for="newLeftForeArm">Left fore arm</label>
+                            <input type="number" class="form-control" id="newLeftForeArm" name="newLeftForeArm">
+                        </div>
+                        <div class="form-group">
+                            <label for="newRightForeArm">Right fore arm</label>
+                            <input type="number" class="form-control" id="newRightForeArm" name="newRightForeArm">
+                        </div>
+                        <div class="form-group">
+                            <label for="newUpperAbs">Upper abs</label>
+                            <input type="number" class="form-control" id="newUpperAbs" name="newUpperAbs">
+                        </div>
+                        <div class="form-group">
+                            <label for="newWaist">Waist</label>
+                            <input type="number" class="form-control" id="newWaist" name="newWaist">
+                        </div>
+                        <div class="form-group">
+                            <label for="newLowerAbs">Lower abs</label>
+                            <input type="number" class="form-control" id="newLowerAbs" name="newLowerAbs">
+                        </div>
+                        <div class="form-group">
+                            <label for="newHips">Hips</label>
+                            <input type="number" class="form-control" id="newHips" name="newHips">
+                        </div>
+                        <div class="form-group">
+                            <label for="newLeftThigh">Left thigh</label>
+                            <input type="number" class="form-control" id="newLeftThigh" name="newLeftThigh">
+                        </div>
+                        <div class="form-group">
+                            <label for="newRightThigh">Right thigh</label>
+                            <input type="number" class="form-control" id="newRightThigh" name="newRightThigh">
+                        </div>
+                        <div class="form-group">
+                            <label for="newLeftCalf">Left calf</label>
+                            <input type="number" class="form-control" id="newLeftCalf" name="newLeftCalf">
+                        </div>
+                        <div class="form-group">
+                            <label for="newRightCalf">Right calf</label>
+                            <input type="number" class="form-control" id="newRightCalf" name="newRightCalf">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i
+                            class="fa-solid fa-xmark"></i></button>
+                    <button type="button" class="btn btn-outline-success" onclick="newMeasure()">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- username szerkesztésének modal ablaka -->
+    <div class="modal fade" id="editProfileUsernameModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Change username</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileUsername">
+                        <div class="form-group">
+                            <label for="editUsername">Username</label>
+                            <input type="text" class="form-control" id="editUsername" name="editUsername">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i
+                            class="fa-solid fa-xmark"></i></button>
+                    <button type="button" class="btn btn-outline-success" onclick="editUsername()">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- születési dátum szerkesztésének modal ablaka -->
+    <div class="modal fade" id="editProfileBirthdayModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modify birthdate</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileBirthday">
+                        <div class="form-group">
+                            <label for="editBirthday">Birthdate</label>
+                            <input type="date" class="form-control" id="editBirthday" name="editBirthday">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i
+                            class="fa-solid fa-xmark"></i></button>
+                    <button type="button" class="btn btn-outline-success" onclick="editBirthday()">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jelszó módosításának modal ablaka -->
+    <div class="modal fade" id="editProfilePasswordModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Change Password</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfilePassword">
+                        <div class="form-group">
+                            <label for="editPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="editPassword" placeholder="Password"
+                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+
+                            <label for="editPassword2" class="form-label">Password again</label>
+                            <input type="password" class="form-control" id="editPassword2" placeholder="Password again">
+                        </div>
+
+                        <div id="message" class="mt-5">
+                            <h3>The password must contains:</h3>
+                            <p id="letter" class="invalid">A <b>small letter</b></p>
+                            <p id="capital" class="invalid">A <b>big letter</b></p>
+                            <p id="number" class="invalid">A <b>number</b></p>
+                            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i
+                            class="fa-solid fa-xmark"></i></button>
+                    <button type="button" class="btn btn-outline-success" onclick="editPassword()">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="user.js"></script>
+    <script src="profile.js"></script>
+    <script src="logout.js"></script>
+</body>
+
+</html>

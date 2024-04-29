@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adminisztráció</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="text-white">
+    <div class="container mt-5">
+        <form id="loginForm" class="row">
+            <div class="col-sm-3"></div> <!-- távtartó -->
+            <div class="col-sm-6">
+                <div class="mb-3">
+                    <label for="loginEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="loginEmail">
+                </div>
+                <div class="mb-3">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="loginPassword">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="button" onclick="forRegister()" class="btn btn-primary float-end">Registration</button>
+            </div>
+            <div class="col-sm-3"></div> <!-- távtartó -->
+        </form>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+
+</html>
